@@ -4,7 +4,11 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RESOLUTION=1280x720
 
-# Update lazmi hai pehle
+# Remove problematic Chrome repo and add the GPG key, then update
+RUN rm -f /etc/apt/sources.list.d/google-chrome.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FD533C07C264648F || true
+
+# Update packages
 RUN apt-get update && apt-get install -y \
     xfce4-terminal \
     xterm \
@@ -16,6 +20,7 @@ RUN apt-get update && apt-get install -y \
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Railway fix
-RUN printf '#!/bin/bash\nservice dbus start\n/usr/local/bin/startup.sh &\nsleep 4\nif [ -z "$PORT" ]; then PORT=8080; fi\n/usr/bin/python3 -m websockify --web=/usr/share/novnc/ $PORT localhost:5901\n' > /start-railway.sh && chmod +x /start-railway.sh
+RUN printf '#!/bin/bash\\nservice dbus start\\n/usr/local/bin/startup.sh &\\nsleep 4\\nif [ -z "$PORT" ]; then PORT=8080; fi\\n/usr/bin/python3 -m websockify --web=/usr/share/novnc/ $PORT localhost:5901\\n' > /start-railway.sh && chmod +x /start-railway.sh
 
 CMD ["/start-railway.sh"]
+
