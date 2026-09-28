@@ -5,7 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV RESOLUTION=1280x720
 
 # Zaroori apps install
-RUN apt-get update && apt-get install -y
+RUN apt update -y
+RUN apt upgrade -y
 RUN apt install xfce4-terminal xterm sudo -y
 # User ko permission do
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
