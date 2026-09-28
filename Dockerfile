@@ -13,7 +13,6 @@ RUN rm -rf /var/lib/apt/lists/* && \
 # Update + halka browser + zaroori tools
 RUN apt-get update && apt-get install -y \
     chromium-browser \
-    midori \
     curl \
     wget \
     sudo \
