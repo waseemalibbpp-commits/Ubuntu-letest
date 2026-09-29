@@ -4,6 +4,10 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RESOLUTION=1280x720
 
+# Remove problematic Chrome repo and add the GPG key, then update
+RUN rm -f /etc/apt/sources.list.d/google-chrome.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FD533C07C264648F || true
+
 # Update lazmi hai pehle
 RUN apt-get update && apt-get install -y \
     xfce4-terminal \
